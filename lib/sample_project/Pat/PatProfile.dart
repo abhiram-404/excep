@@ -4,7 +4,6 @@ import 'package:untitled_1/sample_project/testt.dart';
 import 'PatHomepg.dart';
 import 'TopDocs.dart';
 
-
 class PatProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,11 @@ class PatProfile extends StatelessWidget {
               height: 230,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.teal.shade700, Colors.teal.shade500, Colors.teal.shade300],
+                  colors: [
+                    Colors.teal.shade700,
+                    Colors.teal.shade500,
+                    Colors.teal.shade300
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -75,12 +78,17 @@ class PatProfile extends StatelessWidget {
             // Profile Fields Section
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 children: [
-                  buildProfileField(context, "Name", Icons.person_outline, "John Doe"),
-                  buildProfileField(context, "Email", Icons.email_outlined, "johndoe@email.com"),
-                  buildProfileField(context, "Phone", Icons.phone, "9876540213"),
-                  buildProfileField(context, "Specialization", Icons.medical_information_rounded, "Cardiology"),
+                  buildProfileField(
+                      context, "Name", Icons.person_outline, "John Doe"),
+                  buildProfileField(context, "Email", Icons.email_outlined,
+                      "johndoe@email.com"),
+                  buildProfileField(
+                      context, "Phone", Icons.phone, "9876540213"),
+                  buildProfileField(context, "Specialization",
+                      Icons.medical_information_rounded, "Cardiology"),
                   SizedBox(height: 10),
                   Center(
                     child: SizedBox(
@@ -112,11 +120,11 @@ class PatProfile extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 
-  Widget buildProfileField(BuildContext context, String heading, IconData icon, String label) {
+  Widget buildProfileField(
+      BuildContext context, String heading, IconData icon, String label) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(

@@ -4,7 +4,6 @@ import 'package:untitled_1/sample_project/testt.dart';
 import 'PatHomepg.dart';
 import 'PatProfile.dart';
 
-
 class TopDocs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,11 @@ class TopDocs extends StatelessWidget {
       body: Container(
         color: Colors.blue.shade50,
         child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 16,),
+          padding: const EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+          ),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -47,9 +50,9 @@ class TopDocs extends StatelessWidget {
 
   Widget _buildDoctorCard() {
     return Card(
-margin: EdgeInsets.only(bottom: 120),
-   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-   elevation: 4,
+      margin: EdgeInsets.only(bottom: 120),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
