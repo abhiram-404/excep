@@ -9,9 +9,8 @@ class TopDocs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.teal,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.white),
         title: Text(
           'Top Doctors',
           style: TextStyle(color: Colors.white),
@@ -24,7 +23,7 @@ class TopDocs extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: Colors.blue.shade50,
+        color: Colors.teal.shade50,
         child: Padding(
           padding: const EdgeInsets.only(
             left: 16,
@@ -62,7 +61,7 @@ class TopDocs extends StatelessWidget {
             CircleAvatar(
               radius: 35,
               backgroundColor: Colors.blue.shade100,
-              child: Icon(Icons.person, size: 30, color: Colors.blue),
+              child: Icon(Icons.person, size: 30, color: Colors.teal),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -81,7 +80,7 @@ class TopDocs extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.teal,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../FirstPg.dart';
+import 'PatHomepg.dart';
+
+
 class LoginPat extends StatefulWidget {
   const LoginPat({super.key});
 
@@ -10,17 +14,30 @@ class LoginPat extends StatefulWidget {
 class _LoginPatState extends State<LoginPat> {
   final _formKey = GlobalKey<FormState>(); // For form validation
   bool _isLoading = false; // To show loading indicator
+  final RegExp phonergr = RegExp(r"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$");
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
+        appBar: AppBar(
+          backgroundColor: Colors.teal.shade700,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FirstPg()),
+              );
+            },
+          ),
+        ),
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.teal.shade200, Colors.teal.shade500],
+              colors: [Colors.teal.shade700, Colors.teal.shade500, Colors.teal.shade300],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -83,8 +100,8 @@ class _LoginPatState extends State<LoginPat> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a mobile number';
-                            } else if (value.length != 10) {
-                              return 'Please enter a valid 10-digit number';
+                            }else if (!phonergr.hasMatch(value)) {
+                              return 'Please enter a valid Indian phone number';
                             }
                             return null;
                           },
@@ -105,7 +122,10 @@ class _LoginPatState extends State<LoginPat> {
                                 setState(() {
                                   _isLoading = false;
                                 });
-                                // Navigate to the next screen or show success
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => PatHomePg()),
+                                );
                               });
                             }
                           },
@@ -187,7 +207,7 @@ class _LoginPatState extends State<LoginPat> {
                   'Connecting People for Better Health',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white70,
+                    color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),

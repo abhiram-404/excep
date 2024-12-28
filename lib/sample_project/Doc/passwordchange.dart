@@ -140,7 +140,7 @@ class _PasswordState extends State<Password> {
                               // Handle the additional button's logic here
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Forgot()),
+                                MaterialPageRoute(builder: (context) => ForgotPassChange()),
                               );
                             },
                             child: Text(

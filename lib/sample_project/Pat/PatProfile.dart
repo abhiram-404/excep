@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_1/sample_project/testt.dart';
-
+import '../Doc/editprofile.dart';
+import 'PatEdit.dart';
 import 'PatHomepg.dart';
 import 'TopDocs.dart';
 
@@ -83,19 +84,22 @@ class PatProfile extends StatelessWidget {
                 children: [
                   buildProfileField(
                       context, "Name", Icons.person_outline, "John Doe"),
-                  buildProfileField(context, "Email", Icons.email_outlined,
-                      "johndoe@email.com"),
                   buildProfileField(
                       context, "Phone", Icons.phone, "9876540213"),
-                  buildProfileField(context, "Specialization",
-                      Icons.medical_information_rounded, "Cardiology"),
+                  buildProfileField(
+                      context, "Email", Icons.mail, "not updated"),
                   SizedBox(height: 10),
                   Center(
                     child: SizedBox(
                       width: double.infinity,
                       height: 40,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PatEdit()), // Navigate to the Edit page
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.teal.shade500,
                           shape: RoundedRectangleBorder(
@@ -113,7 +117,6 @@ class PatProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
                 ],
               ),
             ),

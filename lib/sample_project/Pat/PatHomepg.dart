@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:untitled_1/sample_project/Pat/Departments.dart';
 
+import 'PatAbout.dart';
 import 'PatProfile.dart';
 import 'TopDocs.dart';
+import 'loginpat.dart';
 
-class PatHomeP extends StatefulWidget {
+class PatHomePg extends StatefulWidget {
   @override
-  _PatHomePState createState() => _PatHomePState();
+  _PatHomePgState createState() => _PatHomePgState();
 }
 
-class _PatHomePState extends State<PatHomeP> {
+class _PatHomePgState extends State<PatHomePg> {
   int _currentIndex = 0;
 
   final String cardiologistIcon = 'asset/icon/heart.png';
@@ -26,61 +29,66 @@ class _PatHomePState extends State<PatHomeP> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
+            GestureDetector(
+              onTap: () {},
+              child: UserAccountsDrawerHeader(
+                accountName: Text(
+                  'John Doe',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                accountEmail: Text(
+                  "99********",
+                  style: TextStyle(fontSize: 14, color: Colors.white70),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.teal.shade400,
+                  child: Icon(Icons.person, size: 40, color: Colors.white),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade700,
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            // Drawer Items as Tiles
+            Expanded(
+              child: ListView(
                 children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 40, color: Colors.teal),
+                  _buildTile(
+                    icon: Icons.settings, title: 'Settings',
+                    color: Colors.teal.shade100,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Hello, User!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  _buildTile(
+                    icon: Icons.report,
+                    title: 'About us',
+                    color: Colors.teal.shade100,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PatAbout()),
+                      );
+                    },
                   ),
-                  Text(
-                    "user@example.com",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
+                  Divider(),
+                  _buildTile(
+                    icon: Icons.exit_to_app,
+                    title: 'Logout',
+                    color: Colors.red.shade500,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPat()),
+                      );
+                    },
                   ),
                 ],
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home, color: Colors.teal),
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.calendar_today, color: Colors.teal),
-              title: Text('Appointments'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout, color: Colors.teal),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.pop(context);
-              },
             ),
           ],
         ),
@@ -121,7 +129,7 @@ class _PatHomePState extends State<PatHomeP> {
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.blue.shade50,
+          backgroundColor: Colors.teal.shade50,
           child: Image.asset(
             iconPath,
             width: 30,
@@ -151,7 +159,7 @@ class _PatHomePState extends State<PatHomeP> {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: Colors.blue.shade100,
+                  backgroundColor: Colors.teal.shade100,
                   child: Icon(Icons.person, size: 30, color: Colors.teal),
                 ),
                 SizedBox(width: 16),
@@ -231,7 +239,6 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    Icon(Icons.location_on, color: Colors.white),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -254,7 +261,6 @@ class HomeScreen extends StatelessWidget {
                     fillColor: Colors.white,
                     hintText: 'Search',
                     prefixIcon: Icon(Icons.search),
-                    suffixIcon: Icon(Icons.filter_list),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
@@ -283,7 +289,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Departments()),
+                        );
+                      },
                       child: Text(
                         'See all',
                         style: TextStyle(color: Colors.teal),
@@ -318,7 +329,12 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TopDocs()),
+                        );
+                        },
                       child: Text(
                         'See all',
                         style: TextStyle(color: Colors.teal),
@@ -364,7 +380,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.blue.shade50,
+          backgroundColor: Colors.teal.shade50,
           child: Image.asset(
             iconPath,
             width: 30,
@@ -394,7 +410,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundColor: Colors.blue.shade100,
+                  backgroundColor: Colors.teal.shade100,
                   child: Icon(Icons.person, size: 30, color: Colors.teal),
                 ),
                 SizedBox(width: 16),
@@ -430,5 +446,39 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+Widget _buildDrawerTile({required IconData icon, required String title, required VoidCallback onTap}) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.teal.shade700),
+    title: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black87)),
+    onTap: onTap,
+  );
+}
+
+Widget _buildTile({
+  required IconData icon,
+  required String title,
+  required Color color,
+  required VoidCallback onTap,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+    child: Card(
+      color: color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        leading: Icon(icon, size: 30, color: Colors.teal.shade700),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        onTap: onTap,
+      ),
+    ),
+  );
 }
 

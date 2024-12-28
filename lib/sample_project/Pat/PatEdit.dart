@@ -72,9 +72,6 @@ class PatEdit extends StatelessWidget {
                         // Phone Field
                         buildTextField('Phone', 'Enter New Mobile Number'),
 
-                        // Specialization Field
-                        buildTextField('Specialization', 'Enter New Specialization'),
-
                         SizedBox(height: 30),
 
                         // Save Button

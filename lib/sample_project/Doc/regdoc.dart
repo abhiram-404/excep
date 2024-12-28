@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_1/sample_project/Doc/specialization.dart';
+
 import 'logindoc.dart';
+
 
 class RegDoc extends StatefulWidget {
   const RegDoc({Key? key}) : super(key: key);
@@ -11,6 +13,10 @@ class RegDoc extends StatefulWidget {
 
 class _RegDocState extends State<RegDoc> {
   final _formKey = GlobalKey<FormState>();
+  final emailAddress = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+  final passwordrgx = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  final phonergr = RegExp(r"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$");
+  bool _isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +111,9 @@ class _RegDocState extends State<RegDoc> {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter your Email';
                                 }
+                                if (!emailAddress.hasMatch(value)) {
+                                  return 'Enter a valid email address';
+                                }
                                 return null;
                               },
                             ),
@@ -118,28 +127,14 @@ class _RegDocState extends State<RegDoc> {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your mobile number';
                                 }
-                                if (value.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                  return 'Enter a valid 10-digit number';
+                                if (!phonergr.hasMatch(value)) {
+                                  return 'Please enter a valid Indian phone number';
                                 }
                                 return null;
                               },
                             ),
                             SizedBox(height: 10),
-                            _buildInputField(
-                              label: 'Password',
-                              hint: 'Enter your Password',
-                              icon: Icons.lock,
-                              obscureText: true,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                if (value.length < 6) {
-                                  return 'Password must be at least 6 characters long';
-                                }
-                                return null;
-                              },
-                            ),
+                            _buildPasswordField(),
                             SizedBox(height: 20),
 
                             // Register Button
@@ -235,6 +230,55 @@ class _RegDocState extends State<RegDoc> {
         ),
       ),
       validator: validator,
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return TextFormField(
+      obscureText: _isPasswordHidden,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        hintText: 'Enter your Password',
+        prefixIcon: Icon(Icons.lock, color: Color(0xFF2575FC)),
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.blue),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.blue),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.red),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+            color: Color(0xFF2575FC),
+          ),
+          onPressed: () {
+            setState(() {
+              _isPasswordHidden = !_isPasswordHidden;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your password';
+        }
+        if (!passwordrgx.hasMatch(value)) {
+          return 'Password must be at least 8 characters long and include an uppercase letter, a number, and a special character';
+        }
+        return null;
+      },
     );
   }
 }

@@ -1,435 +1,215 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'Pat/PatProfile.dart';
-import 'Pat/TopDocs.dart';
-
-
-// Stateful Widget to manage BottomNavigationBar and screen navigation
-class PatHomePg extends StatefulWidget {
+class Testt extends StatefulWidget {
   @override
-  _PatHomePgState createState() => _PatHomePgState();
+  _TesttState createState() => _TesttState();
 }
 
-class _PatHomePgState extends State<PatHomePg> {
-  int _currentIndex = 0;
-
-  // List of screens for navigation
-  final List<Widget> _screens = [
-    HomeScreen(),      // Home screen
-    TopDocs(),         // Doctors screen
-    PatProfile(),      // Profile screen
-  ];
-
-  final String cardiologistIcon = 'asset/icon/heart.png';
-  final String orthopedicIcon = 'asset/icon/bone.png';
-  final String dentistIcon = 'asset/icon/tooth.png';
+class _TesttState extends State<Testt> {
+  bool _notificationsEnabled = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 40, color: Colors.teal),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Hello, User!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "user@example.com",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home, color: Colors.teal),
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.calendar_today, color: Colors.teal),
-              title: Text('Appointments'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout, color: Colors.teal),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.blue[50],
+        appBarTheme: AppBarTheme(
+          color: Colors.blue[800],
+          iconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.blue[900],
+            fontSize: 16,
+          ),
         ),
       ),
-      body: _screens[_currentIndex], // Display the current screen based on selected index
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped, // Handles tap to navigate
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.teal.shade700,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Doctors',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Method to handle tab selection and navigate to respective screens
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index; // Update the selected index
-    });
-  }
-
-  Widget _buildCategoryItem(String iconPath, String title) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.blue.shade50,
-          child: Image.asset(
-            iconPath,
-            width: 30,
-            height: 30,
-            fit: BoxFit.contain,
-          ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Settings'),
         ),
-        SizedBox(height: 8),
-        Text(
-          title,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDoctorCard(
-      String name, String specialization, double price, double rating) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: ListView(
+          padding: EdgeInsets.all(16.0),
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.blue.shade100,
-                  child: Icon(Icons.person, size: 30, color: Colors.teal),
+            ListTile(
+              title: Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue[900],
                 ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    Text(specialization),
-                  ],
-                ),
-              ],
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                print("Booking for $name");
+            Divider(color: Colors.blue),
+            SwitchListTile(
+              title: Text(
+                'Notifications',
+                style: TextStyle(fontSize: 16, color: Colors.blue[800]),
+              ),
+              subtitle: Text(
+                _notificationsEnabled
+                    ? 'Notifications are enabled'
+                    : 'Notifications are disabled',
+                style: TextStyle(color: Colors.blue[600]),
+              ),
+              value: _notificationsEnabled,
+              onChanged: (bool value) {
+                setState(() {
+                  _notificationsEnabled = value;
+                });
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
+              secondary: Icon(
+                _notificationsEnabled
+                    ? Icons.notifications_active
+                    : Icons.notifications_off,
+                color: _notificationsEnabled ? Colors.blue : Colors.grey,
               ),
-              child: Text(
-                'Book Now',
-                style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            Divider(color: Colors.blue),
+            ListTile(
+              leading: Icon(Icons.share, color: Colors.blue[800]),
+              title: Text(
+                'Share',
+                style: TextStyle(color: Colors.blue[800]),
               ),
+              onTap: () => _showShareOptions(context),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-// Home screen class
-class HomeScreen extends StatelessWidget {
-  final String cardiologistIcon = 'asset/icon/heart.png';
-  final String orthopedicIcon = 'asset/icon/bone.png';
-  final String dentistIcon = 'asset/icon/tooth.png';
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Top Section (Modified Container)
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.teal.shade700, Colors.teal.shade500, Colors.teal.shade300],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Builder(
-                      builder: (context) {
-                        return IconButton(
-                          icon: Icon(Icons.menu, color: Colors.white),
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                        );
-                      },
-                    ),
-                    Icon(Icons.location_on, color: Colors.white),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  "Find your desired",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                Text(
-                  "Doctor Right Now!",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16),
-                TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: Icon(Icons.filter_list),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Rest of the Interface
-        Expanded(
-          child: Column(
+  void _showShareOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Share Via', style: TextStyle(color: Colors.blue[900])),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Categories Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Categories',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See all',
-                        style: TextStyle(color: Colors.teal),
-                      ),
-                    ),
-                  ],
+              ListTile(
+                leading: Image.asset(
+                  'asset/icon/whatsapp.png',
+                  width: 24,
+                  height: 24,
                 ),
+                title: Text('WhatsApp', style: TextStyle(color: Colors.black)),
+                onTap: () => _launchWhatsApp(),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildCategoryItem(cardiologistIcon, 'Cardiologist'),
-                    _buildCategoryItem(orthopedicIcon, 'Orthopedic'),
-                    _buildCategoryItem(dentistIcon, 'Dentist'),
-                  ],
+              ListTile(
+                leading: Image.asset(
+                  'asset/icon/gmail.png',
+                  width: 24,
+                  height: 24,
                 ),
+                title: Text('Gmail', style: TextStyle(color: Colors.black)),
+                onTap: () => _launchGmail(),
               ),
-
-              // Top Doctors Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top Doctors',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See all',
-                        style: TextStyle(color: Colors.teal),
-                      ),
-                    ),
-                  ],
-                ),
+              ListTile(
+                leading: Icon(Icons.facebook, color: Colors.blue),
+                title: Text('Facebook', style: TextStyle(color: Colors.black)),
+                onTap: () => _launchFacebook(),
               ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  children: [
-                    _buildDoctorCard(
-                      'Dr. Jenny Roy',
-                      'Heart Surgeon',
-                      300,
-                      5.0,
-                    ),
-                    _buildDoctorCard(
-                      'Dr. Zak Wolf',
-                      'Cardiologist',
-                      350,
-                      4.8,
-                    ),
-                    _buildDoctorCard(
-                      'Dr. Tanisha Khan',
-                      'Orthopedic',
-                      250,
-                      4.8,
-                    ),
-                  ],
+              ListTile(
+                leading: Image.asset(
+                  'asset/icon/x.png',
+                  width: 24,
+                  height: 24,
                 ),
+                title: Text('X', style: TextStyle(color: Colors.black)),
+                onTap: () => _launchX(),
               ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCategoryItem(String iconPath, String title) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.blue.shade50,
-          child: Image.asset(
-            iconPath,
-            width: 30,
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          title,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDoctorCard(
-      String name, String specialization, double price, double rating) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.blue.shade100,
-                  child: Icon(Icons.person, size: 30, color: Colors.teal),
-                ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    Text(specialization),
-                  ],
-                ),
-              ],
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print("Booking for $name");
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: Text(
-                'Book Now',
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
+          actions: [
+            TextButton(
+              child: Text('Cancel', style: TextStyle(color: Colors.black)),
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ],
-        ),
-      ),
+        );
+      },
+    );
+  }
+
+  void _launchGmail() async {
+    final Uri gmailUri = Uri(
+      scheme: 'https',
+      host: 'mail.google.com',
+      path: '/',
+      queryParameters: {
+        'body': 'Check out this app: https://example.com',
+        'subject': 'Sharing an App',
+      },
+    );
+    if (await canLaunchUrl(gmailUri)) {
+      await launchUrl(gmailUri);
+    } else {
+      _showError('Could not launch Gmail');
+    }
+  }
+
+  void _launchFacebook() async {
+    final Uri facebookUri = Uri(
+      scheme: 'https',
+      host: 'www.facebook.com',
+      path: 'share.php',
+      queryParameters: {
+        'u': 'https://example.com',
+      },
+    );
+    if (await canLaunchUrl(facebookUri)) {
+      await launchUrl(facebookUri);
+    } else {
+      _showError('Could not launch Facebook');
+    }
+  }
+
+  void _launchX() async {
+    final Uri xUri = Uri(
+      scheme: 'https',
+      host: 'twitter.com',
+      path: 'intent/tweet',
+      queryParameters: {
+        'text': 'Check this out! https://example.com',
+      },
+    );
+    if (await canLaunchUrl(xUri)) {
+      await launchUrl(xUri);
+    } else {
+      _showError('Could not launch X');
+    }
+  }
+
+  void _launchWhatsApp() async {
+    final Uri whatsappUri = Uri(
+      scheme: 'https',
+      host: 'api.whatsapp.com',
+      path: 'send',
+      queryParameters: {
+        'text': 'Check out this amazing app: https://example.com',
+      },
+    );
+    if (await canLaunchUrl(whatsappUri)) {
+      await launchUrl(whatsappUri);
+    } else {
+      _showError('Could not launch WhatsApp');
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 }
